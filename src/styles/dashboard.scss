@@ -1,0 +1,254 @@
+.dash-layout {
+    height: 100vh;
+    background: #fbfbfb;
+}
+.dash-header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    height: 80px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dash-logo {
+    height: 35px;
+}
+.dash-search {
+    margin-left: 40px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 400px;
+        padding: 10px 15px;
+        border: 1px solid #e2e2e2;
+        border-radius: 6px 0 0 6px;
+    }
+
+    button {
+        padding: 10px 15px;
+        background: #39cdcc;
+        border: none;
+        color: #fff;
+        border-radius: 0 6px 6px 0;
+    }
+}
+
+.dash-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.docs-link {
+    color: #545f7d;
+}
+
+.profile-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.lendsqr-sider {
+    // width: 260px !important;
+    background: #fff;
+    // padding: 25px 15px;
+    padding: 5px 10px;
+    border-right: 1px solid #eee;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.side-title {
+    font-size: 11px;
+    color: rgba(84, 95, 125, 0.6);
+    font-weight: 600;
+    margin: 25px 0 10px;
+}
+
+.side-group {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+
+.side-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Work Sans', sans-serif;
+    padding: 12px 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #545F7D;
+    border-radius: 1px;
+    cursor: pointer;
+    // transition: background 0.15s ease-in-out;
+
+    &:hover {
+        background: #e3f3fd;
+        border-left: 2px solid #39cdcc;
+        color: #39cdcc !important;
+        font-weight: 400;
+    }
+}
+
+.side-item.active {
+    background: #e3f3fd;
+    border-left: 2px solid #39cdcc;
+    color: #39cdcc !important;
+    font-weight: 600;
+}
+
+.side-icon {
+    font-size: 16px;
+}
+.chevron-icon {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+
+.side-title {
+    margin: 25px 0 10px;
+    font-size: 11px;
+    color: rgba(84, 95, 125, 0.6);
+    font-weight: 600;
+}
+
+.side-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chevron-icon {
+    margin-left: auto;
+    width: 12px;
+}
+
+.dash-content {
+    padding: 40px 40px;
+}
+
+.content-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #213f7d;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #213f7d;
+}
+
+.stats-card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.stats-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.label {
+    font-size: 12px;
+    color: #545f7d;
+    margin-top: 16px;
+}
+
+.icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon {
+    font-size: 22px;
+    color: #213f7d;
+}
+
+.users-table-wrapper {
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.ant-table {
+    background: #ffffff !important;
+}
+
+.ant-table-thead>tr>th {
+    background: #fff !important;
+    font-family: 'Work Sans', sans-serif;
+}
+
+
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.status-pill.active {
+    background: rgba(57, 205, 98, 0.1);
+    color: #39CD62;
+}
+
+.status-pill.pending {
+    background: rgba(233, 178, 0, 0.1);
+    color: #E9B200;
+}
+
+.status-pill.blacklisted {
+    background: rgba(228, 3, 59, 0.1);
+    color: #E4033B;
+}
+
+.status-pill.inactive {
+    background: rgba(84, 95, 125, 0.1);
+    color: #545F7D;
+}
+
+.dash-layout {
+    height: 110vh;
+    background: #fbfbfb;
+    overflow: hidden;
+}
+
+.dash-content {
+    width: 100%;
+    background: transparent;
+    padding: 40px 40px;
+    overflow-y: auto;
+}
+
+.dash-search button {
+    color: #ffffff !important;
+    font-size: 0px;
+}
+.dash-placeholder{
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #545F7D;
+}

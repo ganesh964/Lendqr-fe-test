@@ -1,0 +1,137 @@
+@import "../styles/variables.scss";
+
+html,
+body {
+    font-family: "CorporateS", "Arabic GE SS", "IBM Plex Sans" !important;
+    display: contents !important;
+}
+
+.login-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
+}
+
+/* LEFT SIDE */
+.login-left {
+    flex: 1;
+    background: linear-gradient(rgba(255, 255, 255, 0.85),
+            rgba(255, 255, 255, 0.95)),
+        #fbfbfb;
+
+    padding: 4rem 3rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    box-shadow: inset -30px 0px 60px -10px rgba(0, 0, 0, 0.03);
+
+    .logo {
+        width: 160px;
+        margin-bottom: 4rem;
+    }
+
+    .illustration {
+        max-width: 90%;
+        width: 550px;
+        margin-top: 2rem;
+        object-fit: contain;
+        padding: inherit;
+    }
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+/* RIGHT SIDE */
+.login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+
+    .login-box {
+        // width: 65%;
+        width: 447px;
+        margin-right: 10%;
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #213f7d;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #545f7d;
+            margin-bottom: 2rem;
+        }
+
+        .form {
+
+            .input-group {
+                margin-bottom: 1.2rem;
+
+                input {
+                    width: 447px;
+                    height: 50px;
+                    border-radius: 5px;
+                    border: 2px solid #dfe3e6;
+                    padding: 0 8px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    outline: none;
+                    background: #fbfcff;
+                }
+            }
+
+            .password-field {
+                position: relative;
+
+                .show-toggle {
+                    position: absolute;
+                    right: 0px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 14px;
+                    color: #39CDCC;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+
+            .forgot-link {
+                // margin-top: 8px;
+                // margin-bottom: 24px;
+                color: #39CDCC;
+                font-weight: 600;
+                font-size: 12px;
+                text-decoration: none;
+                letter-spacing: 0.5px;
+            }
+
+            .login-btn {
+                margin-top: 20px;
+                width: 447px;
+                height: 48px;
+                background: #39CDCC;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: 600;
+                color: #ffffff;
+                cursor: pointer;
+                text-transform: uppercase;
+            }
+        }
+
+    }
+}
