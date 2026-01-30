@@ -46,3 +46,11 @@ export interface IEducation {
   monthlyIncome: string | null
   loanRepayment: string | null
 }
+ export interface FilterState{
+  organization: string | null;
+  username: string | null;
+  email: string | null;
+  phone: string | null;
+  status: string | null;
+  date: string | null;
+};

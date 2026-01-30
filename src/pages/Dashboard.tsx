@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Layout, Table } from "antd";
+import { Button, DatePicker, Input, Layout, Popover, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import type { IUser } from "./constants/dashboard.dto";
-
+import type { FilterState, IUser } from "./constants/dashboard.dto";
+import { IoFilter } from "react-icons/io5";
 import logosvg from "../assets/Group.svg";
 import avatar from "../assets/avatar.png";
 import { fetchUsers } from "../services/helper";
@@ -11,7 +11,6 @@ import usericon from "../assets/icon.png"
 import activeuserslogo from "../assets/active.png"
 import loanlogo from "../assets/loan.png"
 import savingslogo from "../assets/savings.png"
-// import notificationlogog from "../assets/notification.png"
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
@@ -34,11 +33,12 @@ import {
     FiStar,
     FiTool,
     FiUser,
-    FiUserPlus
+    FiUserPlus,
 } from "react-icons/fi";
 
 import "../styles/dashboard.scss";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const { Sider, Header, Content } = Layout;
 
@@ -50,6 +50,137 @@ const Dashboard = () => {
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState<string>("users");
     const navigate = useNavigate();
+    const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+    const [filters, setFilters] = useState<FilterState>({
+        organization: "",
+        username: "",
+        email: "",
+        phone: "",
+        status: "",
+        date: null
+    });
+
+    useEffect(() => {
+        setFilteredUsers(users);
+    }, [users]);
+
+    const applyFilters = () => {
+        let data = [...users];
+        if (filters?.organization)
+            data = data?.filter(u => u.organization?.toLowerCase().includes(filters?.organization?.toLowerCase() || ''));
+        if (filters?.username)
+            data = data.filter(u => u.name?.toLowerCase().includes(filters?.username?.toLowerCase() || ''));
+
+        if (filters?.email)
+            data = data.filter(u => u.email?.toLowerCase().includes(filters?.email?.toLowerCase() || ''));
+
+        if (filters?.phone)
+            data = data?.filter(u => u.phone?.includes(filters?.phone || ''));
+        if (filters?.status)
+            data = data?.filter(u => u?.status === filters?.status);
+        if (filters?.date)
+            data = data?.filter(u => u.createdAt?.includes(filters?.date || ''));
+        setFilteredUsers(data);
+    };
+
+    const resetFilters = () => {
+        setFilters({
+            organization: "",
+            username: "",
+            email: "",
+            phone: "",
+            status: "",
+            date: ""
+        });
+        setFilteredUsers(users);
+    };
+
+    const formatDisplayDate = (value: string) => {
+        const date = new Date(value);
+        const day = date.getDate();
+        const month = date.toLocaleString("en-US", { month: "short" });
+        const year = date.getFullYear();
+        const time = date.toLocaleString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+        });
+        return `${day} ${month} ${year} ${time.toLowerCase()}`;
+    };
+
+
+    const FilterPanel = (
+        <div className="filter-panel">
+            <label>Organization</label>
+            <Input
+                value={filters?.organization || ""}
+                onChange={e => setFilters(prev => ({ ...prev, organization: e.target.value }))}
+            />
+
+            <label>Username</label>
+            <Input
+                value={filters.username || ""}
+                onChange={e => setFilters(prev => ({ ...prev, username: e.target.value }))}
+            />
+
+            <label>Email</label>
+            <Input
+                value={filters.email || ""}
+                onChange={e => setFilters(prev => ({ ...prev, email: e.target.value }))}
+            />
+
+            <label>Date</label>
+            <DatePicker
+                value={filters.date ? dayjs(filters.date) : null}
+                onChange={(d) => {
+                    if (!d) {
+                        setFilters(prev => ({ ...prev, date: null }));
+                        return;
+                    }
+
+                    const formatted = d.toDate().toLocaleString("en-US", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hour12: true
+                    }).toLowerCase();
+
+                    setFilters(prev => ({ ...prev, date: formatted }));
+                }}
+            />
+
+
+            <label>Phone</label>
+            <Input
+                value={filters.phone || ""}
+                onChange={e => setFilters(prev => ({ ...prev, phone: e.target.value }))}
+            />
+
+            <label>Status</label>
+            <Select
+                allowClear
+                value={filters.status || ""}
+                onChange={(val) => setFilters(prev => ({ ...prev, status: val || "" }))}
+                options={[
+                    { value: "Active", label: "Active" },
+                    { value: "Inactive", label: "Inactive" },
+                    { value: "Pending", label: "Pending" },
+                    { value: "Blacklisted", label: "Blacklisted" }
+                ]}
+            />
+
+            <div className="filter-actions">
+                <Button onClick={resetFilters}>Reset</Button>
+                <Button type="primary" onClick={applyFilters}>Filter</Button>
+            </div>
+        </div>
+    );
+
+
+
+
     const storedUser = JSON?.parse(localStorage.getItem("lendsqrUser") || "{}");
 
     useEffect(() => {
@@ -75,30 +206,38 @@ const Dashboard = () => {
         return <span className={`status-pill ${cls}`}>{status}</span>
     };
 
+    const headerWithFilter = (title: string) => (
+        <div className="th-with-filter">
+            {title}
+            <Popover
+                content={FilterPanel}
+                trigger="click"
+                placement="bottomLeft"
+            >
+                <IoFilter className="filter-icon" color="#545F7D" size={16} />
+            </Popover>
+        </div>
+    );
+
+
     const columns: ColumnsType<IUser> = [
-        { title: "ORGANIZATION", dataIndex: "organization", key: "organization" },
-        { title: "USERNAME", dataIndex: "name", key: "name" },
-        { title: "EMAIL", dataIndex: "email", key: "email" },
-        { title: "PHONE NUMBER", dataIndex: "phone", key: "phone" },
         {
-            title: "DATE JOINED",
+            title: headerWithFilter('ORGANIZATION'),
+            dataIndex: "organization",
+            key: "organization"
+        },
+
+        { title: headerWithFilter("USERNAME"), dataIndex: "name", key: "name" },
+        { title: headerWithFilter("EMAIL"), dataIndex: "email", key: "email" },
+        { title: headerWithFilter("PHONE NUMBER"), dataIndex: "phone", key: "phone" },
+        {
+            title: headerWithFilter("DATE JOINED"),
             dataIndex: "createdAt",
             key: "createdAt",
-            render: (value: string) => {
-                const date = new Date(value);
-                const day = date?.getDate();
-                const month = date?.toLocaleString("en-US", { month: "short" });
-                const year = date?.getFullYear();
-                const time = date?.toLocaleString("en-US", {
-                    hour: "numeric",
-                    minute: "2-digit",
-                    hour12: true,
-                });
-                return `${day} ${month} ${year} ${time?.toLowerCase()}`;
-            },
+            render: (value: string) => formatDisplayDate(value)
         },
         {
-            title: "STATUS",
+            title: headerWithFilter("STATUS"),
             dataIndex: "status",
             key: "status",
             render: (value) => renderStatus(value)
@@ -249,7 +388,7 @@ const Dashboard = () => {
                                     rowKey="id"
                                     loading={loading}
                                     columns={columns}
-                                    dataSource={users}
+                                    dataSource={filteredUsers}
                                     onRow={(record) => ({
                                         onClick: () => {
                                             setSelectedUserId(record?.id);
